@@ -79,7 +79,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener{
         else if(evt.getPropertyName().equals("ERREUR"))
         {
             Exception ex = (Exception) evt.getNewValue();
-            ex.printStackTrace();
+            //ex.printStackTrace();
             JOptionPane.showMessageDialog(this, String.format("Une erreur est survenue : %s", ex.getMessage()));
         }
     }

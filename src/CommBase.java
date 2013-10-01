@@ -112,7 +112,7 @@ public class CommBase {
 					// supress error
 				}
 				catch (Exception ex) {
-					ex.printStackTrace();
+					//ex.printStackTrace();
 				}
 		
 		        isActif = false;

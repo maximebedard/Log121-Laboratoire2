@@ -28,7 +28,7 @@ public class FenetreFormes extends JComponent {
     /**
      * Tableau de formes
      */
-    TableauFormes formes = new TableauFormes();
+    ListeChainee<Forme> formes = new ListeChainee<Forme>();
 
 	/**
 	 * Constructeur
@@ -43,7 +43,7 @@ public class FenetreFormes extends JComponent {
      */
     public void ajouterForme(Forme f)
     {
-        formes.ajouter(f);
+        formes.ajouterFin(f);
     }
 
 	/*
@@ -51,8 +51,9 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override 
 	public void paintComponent(Graphics g){
-        for(int i = 0; i < formes.getNbElements(); i++)
-            formes.getForme(i).dessiner(g);
+       
+        for(Forme f : formes)
+        	f.dessiner(g);
 	}
 	
 	/*

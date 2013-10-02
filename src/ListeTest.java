@@ -1,16 +1,17 @@
 import static org.junit.Assert.*;
 
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
-public class ListeChaineeTest {
+public class ListeTest {
 
 	private static final int nbIter = 5;
 
 	@Test
 	public void testAjouterDebut() {
-		ListeChainee<Integer> liste = new ListeChainee<Integer>();
+		Liste<Integer> liste = new Liste<Integer>();
 		for (int i = 0; i < 10; i++)
 			liste.ajouterDebut(i);
 		assertEquals(10, liste.getSize());
@@ -20,7 +21,7 @@ public class ListeChaineeTest {
 
 	@Test
 	public void testAjouterFin() {
-		ListeChainee<Integer> liste = new ListeChainee<Integer>();
+		Liste<Integer> liste = new Liste<Integer>();
 		for (int i = 0; i < 10; i++)
 			liste.ajouterFin(i);
 
@@ -30,12 +31,11 @@ public class ListeChaineeTest {
 
 	@Test
 	public void testAjouter() {
-		ListeChainee<Integer> liste = new ListeChainee<Integer>();
+		Liste<Integer> liste = new Liste<Integer>();
 
 		liste.ajouter(0, 1);
 		liste.ajouter(0, 2);
 		liste.ajouter(0, 3);
-
 
 		liste.ajouter(1, 1);
 		liste.ajouter(1, 2);
@@ -47,8 +47,8 @@ public class ListeChaineeTest {
 		assertEquals("[3,3,2,1,2,1,4]", liste.toString());
 	}
 
-	private ListeChainee<Integer> buildList() {
-		ListeChainee<Integer> l = new ListeChainee<Integer>();
+	private Liste<Integer> buildList() {
+		Liste<Integer> l = new Liste<Integer>();
 
 		for (int i = 0; i < nbIter; i++)
 			l.ajouterDebut(1);
@@ -64,7 +64,7 @@ public class ListeChaineeTest {
 
 	@Test
 	public void testRetirerDebut() {
-		ListeChainee<Integer> liste = buildList();
+		Liste<Integer> liste = buildList();
 
 		for (int i = 0; i < nbIter; i++)
 			liste.retirerDebut();
@@ -74,13 +74,13 @@ public class ListeChaineeTest {
 
 	@Test(expected = NoSuchElementException.class)
 	public void testRetirerDebutVide() {
-		ListeChainee<Integer> l = new ListeChainee<Integer>();
+		Liste<Integer> l = new Liste<Integer>();
 		l.retirerDebut();
 	}
 
 	@Test
 	public void testRetirerFin() {
-		ListeChainee<Integer> liste = buildList();
+		Liste<Integer> liste = buildList();
 
 		for (int i = 0; i < nbIter; i++) {
 			liste.retirerFin();
@@ -88,19 +88,39 @@ public class ListeChaineeTest {
 
 		assertEquals(2 * nbIter, liste.getSize());
 	}
-	
+
 	@Test
-	public void testRetirer()
-	{
-		ListeChainee<Integer> liste = buildList();
+	public void testRetirer() {
+		Liste<Integer> liste = buildList();
 
 		for (int i = 0; i < nbIter; i++) {
 			liste.retirer(nbIter - i);
 		}
 
-		assertEquals(2 * nbIter, liste.getSize());		
+		assertEquals(2 * nbIter, liste.getSize());
 	}
-	
-	
+
+	@Test
+	public void testSort() {
+		Liste<Integer> liste = new Liste<Integer>();
+
+		for (int i = 50; i >= 0; i--)
+			liste.ajouterFin(i);
+
+		assertEquals((long) 50, (long) liste.trouve(0));
+		assertEquals((long) 0, (long) liste.trouve(50));
+
+		Liste<Integer> copie = ListeOperation.sort(liste);
+
+		assertEquals((long) 0, (long) copie.trouve(0));
+		assertEquals((long) 50, (long) copie.trouve(50));
+
+		int j = 0;
+		for (int i : copie) {
+			assertEquals(j, i);
+			j++;
+		}
+
+	}
 
 }

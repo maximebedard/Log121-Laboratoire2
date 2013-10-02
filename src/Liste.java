@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ListeChainee<T> implements Iterable<T> {
+public class Liste<T> implements Iterable<T> {
 
 	/**
 	 * Nombre d'éléments dans la file
@@ -21,7 +21,7 @@ public class ListeChainee<T> implements Iterable<T> {
 	/**
 	 * Construit une liste d'éléments vide
 	 */
-	public ListeChainee() {
+	public Liste() {
 		begin = end = null;
 		size = 0;
 	}
@@ -51,6 +51,11 @@ public class ListeChainee<T> implements Iterable<T> {
 		size++;
 	}
 
+	public void ajouterFin(Liste<T> liste) {
+		for (T elem : liste)
+			ajouterFin(elem);
+	}
+
 	/**
 	 * Ajoute un forme au debut de la file Opération en O(1)
 	 * 
@@ -73,6 +78,11 @@ public class ListeChainee<T> implements Iterable<T> {
 		}
 
 		size++;
+	}
+
+	public void ajouterDebut(Liste<T> liste) {
+		for (T elem : liste)
+			ajouterDebut(elem);
 	}
 
 	/**

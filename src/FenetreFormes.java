@@ -28,7 +28,7 @@ public class FenetreFormes extends JComponent {
     /**
      * Tableau de formes
      */
-    ListeChainee<Forme> formes = new ListeChainee<Forme>();
+    Liste<Forme> formes = new Liste<Forme>();
 
 	/**
 	 * Constructeur

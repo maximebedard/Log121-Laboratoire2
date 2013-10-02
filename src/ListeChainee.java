@@ -43,7 +43,8 @@ public class ListeChainee<T> implements Iterable<T> {
 		}
 		// on ajoute le noeud é la fin
 		else {
-			end.next = new Noeud<T>(elem);
+			Noeud<T> a = end;
+			end.next = new Noeud<T>(elem, null, a);
 			end = end.next;
 		}
 
@@ -60,15 +61,15 @@ public class ListeChainee<T> implements Iterable<T> {
 	public void ajouterDebut(T elem) {
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
-		
+
 		// on ajoute le premier noeud
 		if (begin == null) {
 			begin = new Noeud<T>(elem);
 			end = begin;
 		} else {
 			Noeud<T> temp = begin;
-			begin = new Noeud<T>(elem);
-			begin.next = temp;
+			begin = new Noeud<T>(elem, temp, null);
+			temp.previous = begin;
 		}
 
 		size++;
@@ -94,9 +95,11 @@ public class ListeChainee<T> implements Iterable<T> {
 		else if (index == size)
 			ajouterFin(elem);
 		else {
-			Noeud<T> precedent = trouveNoeud(index - 1);
-			Noeud<T> nouveau = new Noeud<T>(elem, precedent.next);
-			precedent.next = nouveau;
+			Noeud<T> current = trouveNoeud(index);
+			Noeud<T> nouveau = new Noeud<T>(elem, current, current.previous);
+			current.previous.next = nouveau;
+			current.next.previous = nouveau;
+
 			size++;
 		}
 	}
@@ -128,7 +131,8 @@ public class ListeChainee<T> implements Iterable<T> {
 
 		Noeud<T> found = begin;
 		int i = 0;
-		while (found.hasNext() && i != index) {
+
+		while (found.hasNext() && i++ != index) {
 			found = found.next;
 		}
 
@@ -150,7 +154,10 @@ public class ListeChainee<T> implements Iterable<T> {
 		else if (index == size)
 			retirerFin();
 		else {
-			
+			Noeud<T> supprimer = trouveNoeud(index);
+			supprimer.previous.next = supprimer.next;
+			supprimer.next.previous = supprimer.previous;
+			size--;
 		}
 	}
 
@@ -164,8 +171,7 @@ public class ListeChainee<T> implements Iterable<T> {
 
 		// on deplace le noeud du debut s'il y a plus d'un element
 		if (begin.hasNext()) {
-			Noeud<T> temp = begin.next;
-			begin = temp;
+			begin = begin.next;
 		} else {
 			begin = null;
 			end = null;
@@ -180,9 +186,12 @@ public class ListeChainee<T> implements Iterable<T> {
 		if (end == null)
 			throw new NoSuchElementException();
 
-		if (begin == end)
+		if (end.hasPrevious()) {
+			end = end.previous;
+		} else {
+			end = null;
 			begin = null;
-		end = null;
+		}
 		size--;
 	}
 
@@ -190,44 +199,40 @@ public class ListeChainee<T> implements Iterable<T> {
 	 * Retoune un iterateur pour parcourir les elements dans la liste
 	 */
 	public Iterator<T> iterator() {
-		return new Iterator<T>() {
-			private Noeud<T> prev = null;
-			private Noeud<T> current = begin;
-
-			@Override
-			public boolean hasNext() {
-				return current != null;
-			}
-
-			@Override
-			public T next() {
-				if (current == null) {
-					throw new NoSuchElementException();
-				}
-
-				prev = current;
-				current = current.next;
-				return prev.elem;
-			}
-
-			@Override
-			public void remove() {
-				throw new IllegalArgumentException("Not implemented");
-			}
-
-		};
+		return new IteratorImplementation(begin, true);
 	}
 
+	public Iterator<T> reverseIterator() {
+		return new IteratorImplementation(end, false);
+	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String output = "";
-		for(T elem : this)
+		for (T elem : this)
 			output += elem.toString() + ",";
-		
+
 		return String.format("[%s]", output.substring(0, output.length() - 1));
-		
+
+	}
+
+	public String toDebugString() {
+		String output = "";
+
+		Noeud<T> current = begin;
+		while (current != null) {
+			output += String.format(
+					"%s <- %s -> %s,",
+					(current.previous == null ? "NULL" : current.previous.elem
+							.toString()),
+					current.elem.toString(),
+					(current.next == null ? "NULL" : current.next.elem
+							.toString()));
+			current = current.next;
+		}
+
+		return String.format("[%s]", output.substring(0, output.length() - 1));
+
 	}
 
 	/**
@@ -239,22 +244,64 @@ public class ListeChainee<T> implements Iterable<T> {
 		return size;
 	}
 
-	private class Noeud<U> {
-		public Noeud(U value) {
-			this(value, null);
+	private final class IteratorImplementation implements Iterator<T> {
+		private Noeud<T> prev;
+		private Noeud<T> current;
+		private boolean ascending;
+
+		public IteratorImplementation(Noeud<T> current, boolean ascending) {
+			this.prev = null;
+			this.current = current;
+			this.ascending = ascending;
 		}
 
-		public Noeud(U value, Noeud<U> next) {
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public T next() {
+			if (current == null) {
+				throw new NoSuchElementException();
+			}
+
+			prev = current;
+			if (ascending)
+				current = current.next;
+			else
+				current = current.previous;
+			return prev.elem;
+		}
+
+		@Override
+		public void remove() {
+			throw new IllegalArgumentException("Not implemented");
+		}
+	}
+
+	private final class Noeud<U> {
+		public Noeud(U value) {
+			this(value, null, null);
+		}
+
+		public Noeud(U value, Noeud<U> next, Noeud<U> previous) {
 			this.elem = value;
 			this.next = next;
+			this.previous = previous;
 		}
 
 		public boolean hasNext() {
 			return next != null;
 		}
 
+		public boolean hasPrevious() {
+			return previous != null;
+		}
+
 		public U elem;
 		public Noeud<U> next;
+		public Noeud<U> previous;
 	}
 
 }

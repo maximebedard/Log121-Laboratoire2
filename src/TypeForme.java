@@ -3,9 +3,9 @@
  */
 public enum TypeForme
 {
-	LIGNE,
-	RECTANGLE,
 	CARRE,
+	RECTANGLE,
+	CERCLE,
 	OVALE,
-	CERCLE
+	LIGNE
 }

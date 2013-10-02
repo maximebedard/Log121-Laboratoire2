@@ -18,17 +18,7 @@ import java.awt.Graphics;
 
 
 public class Ligne extends Forme {
-
-    /**
-     * Position X2
-     */
-	private int x2;
-
-    /**
-     * Position Y2
-     */
-	private int y2;
-
+	
     /**
      * Constructeur de la classe ligne
      * @param noSeq numéro séquentiel
@@ -38,15 +28,13 @@ public class Ligne extends Forme {
      * @param y2 position en y2
      */
 	public Ligne(int noSeq, int x, int y, int x2, int y2) {
-		super(noSeq, x, y);
+		super(noSeq, x, y, x2, y2);
         setCouleur(Color.RED);
-		this.x2 = x2;
-		this.y2 = y2;
 	}
 
 	@Override
 	protected void dessinerForme(Graphics g) {
-		g.drawLine(getX(), getY(), x2, y2);
+		g.drawLine(getX(), getY(), getX2(), getY2());
 		
 	}
 

@@ -24,8 +24,6 @@ public final class ListeOperation {
 
 		if (liste.getSize() <= 1)
 			return liste;
-		
-		
 
 		T pivot = liste.trouve(liste.getSize() / 2);
 

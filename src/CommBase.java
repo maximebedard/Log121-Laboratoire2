@@ -96,7 +96,8 @@ public class CommBase {
 			protected Object doInBackground() {
 				System.out.println("Le fils d'execution parallele est lance");
 				try {
-			        while(connexion.isConnected()) {
+					int i = 0;
+			        while(connexion.isConnected() && i++ != 10) {
 			            Thread.sleep(DELAI);
 			
 			            String strForme = connexion.getForme();
@@ -108,11 +109,8 @@ public class CommBase {
 				catch(IOException ex) {
 					firePropertyChangeInternal("ERREUR", ex);
 				}
-				catch (InterruptedException ex) {
-					// supress error
-				}
 				catch (Exception ex) {
-					//ex.printStackTrace();
+					// suppress everything else
 				}
 		
 		        isActif = false;

@@ -25,7 +25,7 @@ public class CommBase {
     /**
      * Délais entre les appels au serveur
      */
-	private final int DELAI = 1000;
+	private final int DELAI = 1;
 
     /**
      * Thread qui communique périodiquement avec le serveur
@@ -94,7 +94,6 @@ public class CommBase {
 		threadComm = new SwingWorker<Object, Object>(){
 			@Override
 			protected Object doInBackground() {
-				System.out.println("Le fils d'execution parallele est lance");
 				try {
 					int i = 0;
 			        while(connexion.isConnected() && i++ != 10) {
@@ -102,7 +101,6 @@ public class CommBase {
 			
 			            String strForme = connexion.getForme();
 			            
-			            //La méthode suivante alerte l'observateur
 			            firePropertyChangeInternal("FORME", strForme);
 			        }
 				}
@@ -114,7 +112,6 @@ public class CommBase {
 				}
 		
 		        isActif = false;
-		        System.out.println("Le fils d'execution parallele est termine");
 		        return null;
 			}
 			

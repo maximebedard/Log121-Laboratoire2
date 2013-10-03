@@ -39,7 +39,7 @@ public class Ovale extends Forme {
 	 */
 	public Ovale(int noSeq, int x, int y, int rayonH, int rayonV) {
 		super(noSeq, x, y, x + 2 * rayonH, y + 2 * rayonV);
-		setCouleur(Color.GREEN);
+		setCouleur(new Color(0.0f, 1.0f, 0.0f, 0.5f));
 		this.rayonH = rayonH;
 		this.rayonV = rayonV;
 	}

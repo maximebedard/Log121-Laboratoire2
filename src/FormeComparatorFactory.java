@@ -6,26 +6,30 @@ public class FormeComparatorFactory {
 	public Comparator<Forme> getComprator(FormeComparatorType type)
 	{
 		Comparator<Forme> comparator = null;
-		
+
 		switch(type)
 		{
 		case AIRE_ASC:
+			comparator = new AireComparator(true);
 			break;
 		case AIRE_DESC:
+			comparator = new AireComparator(false);
 			break;
 		case DISTANCE_MAXIMALE_ASC:
 			break;
 		case DISTANCE_MAXIMALE_DESC:
 			break;
 		case NO_SEQUENTIEL_ASC:
+			comparator = new NoSequentielComparator(true);
 			break;
 		case NO_SEQUENTIEL_DESC:
+			comparator = new NoSequentielComparator(false);
 			break;
 		case TYPE_FORME_ASC:
 			comparator = new TypeComparator(true);
 			break;
 		case TYPE_FORME_DESC:
-			comparator = new 
+			comparator = new TypeComparator(false);
 			break;
 		default:
 			comparator = new NoSequentielComparator(true);

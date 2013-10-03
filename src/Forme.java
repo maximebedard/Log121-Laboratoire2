@@ -21,7 +21,6 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 
 /**
  * Classe abstraite qui définit les attributs et les méthodes partagés entre les
@@ -190,10 +189,10 @@ public abstract class Forme {
 	public void dessiner(Graphics g) {
 		g.setColor(couleur);
 		dessinerForme(g);
-		dessinerLimites(g);
+		dessinerBoundingBox(g);
 	}
 
-	protected void dessinerLimites(Graphics g) {
+	protected void dessinerBoundingBox(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLACK);
 		g2.setStroke(dashed);
@@ -208,6 +207,12 @@ public abstract class Forme {
 	 */
 	protected abstract void dessinerForme(Graphics g);
 
-	protected abstract int getAire();
+	/**
+	 * Retourne l'aire de la bounding box
+	 * @return
+	 */
+	protected int getAire(){
+		return (x2 - x) * (y2 - y);
+	}
 
 }

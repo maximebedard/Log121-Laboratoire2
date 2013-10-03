@@ -17,7 +17,7 @@ public class Cercle extends Ovale
 
 	public Cercle(int noSeq, int x, int y, int rayon) {
 		super(noSeq, x, y, rayon, rayon);
-		setCouleur(Color.ORANGE);
+		setCouleur(new Color(0.5f, 0.5f,0.25f, 0.5f));
 	}
 
 }

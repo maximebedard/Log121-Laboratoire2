@@ -26,6 +26,6 @@ public class Carre extends Rectangle {
      */
 	public Carre(int noSeq, int x, int y, int x2, int y2) {
 		super(noSeq, x,  y,  x2, y2);
-		setCouleur(Color.CYAN);
+		setCouleur(new Color(0.0f, 1.0f, 1.0f, 0.5f));
 	}
 }

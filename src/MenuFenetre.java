@@ -40,7 +40,14 @@ public class MenuFenetre extends JMenuBar{
 			MENU_DESSIN_DEMARRER = "app.frame.menus.draw.start",
 			MENU_DESSIN_ARRETER = "app.frame.menus.draw.stop",
 			MENU_AIDE_TITRE = "app.frame.menus.help.title",
-			MENU_AIDE_PROPOS = "app.frame.menus.help.about";
+			MENU_AIDE_PROPOS = "app.frame.menus.help.about",
+			DIALOG_CONNEXION_TITRE = "app.frame.menus.connect.title",
+			DIALOG_CONNEXION_MSG = "app.frame.menus.connect.msg",
+			DIALOG_CONNEXION_ERR_UNKNOWNHOST = "app.frame.menus.connect.err.unknownhost",
+			DIALOG_CONNEXION_ERR_MALFORMED_URL = "app.frame.menus.connect.err.malformedurl",
+			DIALOG_CONNEXION_ERR_IO = "app.frame.menus.connect.err.io",
+			DIALOG_CONNEXION_ERR = "app.frame.menus.connect.err";
+					
 	private static final String MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";  
 
 	private JMenuItem arreterMenuItem, demarrerMenuItem;
@@ -73,11 +80,11 @@ public class MenuFenetre extends JMenuBar{
             comm.start(addr);
         }
         catch (UnknownHostException ex){
-            JOptionPaneExtensions.showErrorMessage(this, "Le machine distance ne peut pas être résolue (erreur DNS).");
+            JOptionPaneExtensions.showErrorMessage(this, "La machine distante ne peut pas être résolue (erreur DNS).");
             startConnection();
         }
         catch(MalformedURLException ex){
-        	JOptionPaneExtensions.showErrorMessage(this, String.format("L'url entré '%s' est invalide. %s", addr, ex.getMessage()));
+        	JOptionPaneExtensions.showErrorMessage(this, "L'url entrée est invalide."));
             startConnection();
         }
         catch (IOException ex){

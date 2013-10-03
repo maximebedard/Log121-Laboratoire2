@@ -3,65 +3,67 @@ Cours:  LOG121
 Projet: Squelette du laboratoire #1
 Nom du fichier: FenetreFormes.java
 Date créé: 2013-05-03
-*******************************************************
+ *******************************************************
 Historique des modifications
-*******************************************************
-*@author Patrice Boucher
+ *******************************************************
+ *@author Patrice Boucher
 2013-05-03 Version initiale
-*******************************************************/
+ *******************************************************/
 
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 /**
- * Cette fenêtre gère l'affichage des formes 
+ * Cette fenêtre gère l'affichage des formes
+ * 
  * @author Patrice Boucher
  */
 public class FenetreFormes extends JComponent {
-	
+
 	private static final long serialVersionUID = -2262235643903749505L;
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 500;
-	public static final Dimension dimension = new Dimension(500,500);
+	public static final Dimension dimension = new Dimension(500, 500);
 
-    /**
-     * Tableau de formes
-     */
-    Liste<Forme> formes = new Liste<Forme>();
+	/**
+	 * Tableau de formes
+	 */
+	Liste<Forme> formes = new Liste<Forme>();
 
 	/**
 	 * Constructeur
 	 */
-	public FenetreFormes(){
+	public FenetreFormes() {
 	}
 
-    /**
-     * Ajoute un forme au tableau de forme
-     * Note : Toute forme ajouté lorsque la cardinalité du tableau > 10 remplace les formes précédentes
-     * @param f forme à ajouter
-     */
-    public void ajouterForme(Forme f)
-    {
-        formes.ajouterFin(f);
-    }
+	/**
+	 * Ajoute un forme au tableau de forme Note : Toute forme ajouté lorsque la
+	 * cardinalité du tableau > 10 remplace les formes précédentes
+	 * 
+	 * @param f
+	 *            forme à ajouter
+	 */
+	public void ajouterForme(Forme f) {
+		formes.ajouterFin(f);
+	}
 
 	/*
-	 * Affiche la liste de formes 
+	 * Affiche la liste de formes
 	 */
-	@Override 
-	public void paintComponent(Graphics g){
-       
-        for(Forme f : formes)
-        	f.dessiner(g);
+	@Override
+	public void paintComponent(Graphics g) {
+
+		for (Forme f : formes)
+			f.dessiner(g);
 	}
-	
+
 	/*
-	 * Le Layout qui utilise (contient) FenetreFormes doit réserver 
-	 * l'espace nécessaire à son affichage
+	 * Le Layout qui utilise (contient) FenetreFormes doit réserver l'espace
+	 * nécessaire à son affichage
 	 */
-	@Override 
-	public Dimension getPreferredSize(){
+	@Override
+	public Dimension getPreferredSize() {
 		return dimension;
 	}
 

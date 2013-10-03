@@ -27,17 +27,25 @@ import java.net.UnknownHostException;
 public class MenuFenetre extends JMenuBar {
 
 	private static final long serialVersionUID = 1536336192561843187L;
-	
+
 	private static final int MENU_FICHIER_QUITTER_TOUCHE_MASK = ActionEvent.CTRL_MASK;
 	private static final char MENU_FICHIER_QUITTER_TOUCHE_RACC = KeyEvent.VK_Q;
-	
+
 	private static final int MENU_FICHIER_OBTENIR_FORMES_TOUCHE_MASK = ActionEvent.CTRL_MASK;
-	private static final char MENU_FICHIER_OBTENIR_FORMES_TOUCHE_RACC = KeyEvent.VK_Q;
-	
-	
+	private static final char MENU_FICHIER_OBTENIR_FORMES_TOUCHE_RACC = KeyEvent.VK_O;
+
 	private static final String MENU_FICHIER_TITRE = "app.frame.menus.file.title",
-			MENU_FICHIER_OBTENIR_FORMES = "app.frame.menus.file.fetch",
+			MENU_FICHIER_OBTENIR_FORMES = "app.frame.menus.file.obtenir",
 			MENU_FICHIER_QUITTER = "app.frame.menus.file.exit",
+			MENU_SORT_TITRE = "app.frame.menus.sort.title",
+			MENU_SORT_AIRE_ASC = "app.frame.menus.sort.aire.asc",
+			MENU_SORT_AIRE_DESC = "app.frame.menus.sort.aire.desc",
+			MENU_SORT_DISTANCE_MAXIMALE_ASC = "app.frame.menus.sort.distancemax.asc",
+			MENU_SORT_DISTANCE_MAXIMALE_DESC = "app.frame.menus.sort.distancemax.desc",
+			MENU_SORT_NO_SEQUENTIEL_ASC = "app.frame.menus.sort.noseq.asc",
+			MENU_SORT_NO_SEQUENTIEL_DESC = "app.frame.menus.sort.noseq.desc",
+			MENU_SORT_TYPE_FORME_ASC = "app.frame.menus.sort.typeforme.asc",
+			MENU_SORT_TYPE_FORME_DESC = "app.frame.menus.sort.typeforme.desc",
 			MENU_AIDE_TITRE = "app.frame.menus.help.title",
 			MENU_AIDE_PROPOS = "app.frame.menus.help.about",
 			DIALOG_CONNEXION_MSG = "app.frame.menus.connect.msg",
@@ -48,7 +56,6 @@ public class MenuFenetre extends JMenuBar {
 
 	private static final String MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";
 
-	private JMenuItem arreterMenuItem, demarrerMenuItem;
 	private static final int DELAI_QUITTER_MSEC = 200;
 
 	CommBase comm; // Pour activer/désactiver la communication avec le serveur
@@ -59,6 +66,7 @@ public class MenuFenetre extends JMenuBar {
 	public MenuFenetre(CommBase comm) {
 		this.comm = comm;
 		addMenuFichier();
+		addMenuSort();
 		addMenuAide();
 	}
 
@@ -97,21 +105,20 @@ public class MenuFenetre extends JMenuBar {
 	 * Créer le menu "File".
 	 */
 	protected void addMenuFichier() {
-		JMenu menu = creerMenu(MENU_FICHIER_TITRE,
-				new String[] { MENU_FICHIER_OBTENIR_FORMES, MENU_FICHIER_QUITTER });
-		
+		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] {
+				MENU_FICHIER_OBTENIR_FORMES, MENU_FICHIER_QUITTER });
+
 		menu.getItem(0).addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				startConnection();
 			}
 		});
 		menu.getItem(0).setAccelerator(
 				KeyStroke.getKeyStroke(MENU_FICHIER_OBTENIR_FORMES_TOUCHE_RACC,
 						MENU_FICHIER_OBTENIR_FORMES_TOUCHE_MASK));
-		
+
 		menu.getItem(1).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -127,6 +134,15 @@ public class MenuFenetre extends JMenuBar {
 		menu.getItem(1).setAccelerator(
 				KeyStroke.getKeyStroke(MENU_FICHIER_QUITTER_TOUCHE_RACC,
 						MENU_FICHIER_QUITTER_TOUCHE_MASK));
+		add(menu);
+	}
+
+	protected void addMenuSort() {
+		JMenu menu = creerMenuRadio(MENU_SORT_TITRE, new String[] {
+				MENU_SORT_AIRE_DESC, MENU_SORT_DISTANCE_MAXIMALE_ASC,
+				MENU_SORT_DISTANCE_MAXIMALE_DESC, MENU_SORT_NO_SEQUENTIEL_ASC,
+				MENU_SORT_NO_SEQUENTIEL_DESC, MENU_SORT_TYPE_FORME_ASC,
+				MENU_SORT_TYPE_FORME_DESC, MENU_SORT_AIRE_ASC });
 		add(menu);
 	}
 
@@ -149,14 +165,6 @@ public class MenuFenetre extends JMenuBar {
 	}
 
 	/**
-	 * Activer ou désactiver les items du menu selon la sélection.
-	 */
-	private void rafraichirMenus() {
-		demarrerMenuItem.setEnabled(!comm.isActif());
-		arreterMenuItem.setEnabled(comm.isActif());
-	}
-
-	/**
 	 * Créer un élément de menu à partir d'un champs principal et ses éléments
 	 * 
 	 * @param titleKey
@@ -169,6 +177,18 @@ public class MenuFenetre extends JMenuBar {
 		JMenu menu = new JMenu(LangueConfig.getResource(titleKey));
 		for (String itemKey : itemKeys) {
 			menu.add(new JMenuItem(LangueConfig.getResource(itemKey)));
+		}
+		return menu;
+	}
+
+	private static JMenu creerMenuRadio(String titleKey, String[] itemKeys) {
+		JMenu menu = new JMenu(LangueConfig.getResource(titleKey));
+		ButtonGroup grp = new ButtonGroup();
+		for (String itemKey : itemKeys) {
+			
+			JRadioButtonMenuItem btn = new JRadioButtonMenuItem(LangueConfig.getResource(itemKey));
+			grp.add(btn);
+			menu.add(btn);
 		}
 		return menu;
 	}

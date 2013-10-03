@@ -108,6 +108,7 @@ public class CommBase {
 					firePropertyChangeInternal("ERREUR", ex);
 				}
 				catch (Exception ex) {
+					ex.printStackTrace();
 					// suppress everything else
 				}
 		

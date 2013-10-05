@@ -26,26 +26,13 @@ public class FenetreFormes extends JComponent {
 	public static final int HEIGHT = 500;
 	public static final Dimension dimension = new Dimension(500, 500);
 
-	/**
-	 * Tableau de formes
-	 */
-	Liste<Forme> formes = new Liste<Forme>();
+	private Collection<Forme> formes;
 
 	/**
 	 * Constructeur
 	 */
-	public FenetreFormes() {
-	}
-
-	/**
-	 * Ajoute un forme au tableau de forme Note : Toute forme ajouté lorsque la
-	 * cardinalité du tableau > 10 remplace les formes précédentes
-	 * 
-	 * @param f
-	 *            forme à ajouter
-	 */
-	public void ajouterForme(Forme f) {
-		formes.ajouterFin(f);
+	public FenetreFormes(Collection<Forme> formes) {
+		this.formes = formes;
 	}
 
 	/*
@@ -53,7 +40,6 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-
 		for (Forme f : formes)
 			f.dessiner(g);
 	}

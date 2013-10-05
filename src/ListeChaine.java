@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Liste<T> implements Iterable<T> {
+public class ListeChaine<T> implements Collection<T> {
 
 	/**
 	 * Nombre d'éléments dans la file
@@ -21,7 +21,7 @@ public class Liste<T> implements Iterable<T> {
 	/**
 	 * Construit une liste d'éléments vide
 	 */
-	public Liste() {
+	public ListeChaine() {
 		begin = end = null;
 		size = 0;
 	}
@@ -32,7 +32,7 @@ public class Liste<T> implements Iterable<T> {
 	 * @param elem
 	 * @throws IllegalArgumentException
 	 */
-	public void ajouterFin(T elem) {
+	public void addLast(T elem) {
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
 
@@ -51,9 +51,9 @@ public class Liste<T> implements Iterable<T> {
 		size++;
 	}
 
-	public void ajouterFin(Liste<T> liste) {
-		for (T elem : liste)
-			ajouterFin(elem);
+	public void addLast(Collection<T> col) {
+		for (T elem : col)
+			addLast(elem);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Liste<T> implements Iterable<T> {
 	 * 
 	 * @throws IllegalArgumentException
 	 */
-	public void ajouterDebut(T elem) {
+	public void addFirst(T elem) {
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
 
@@ -80,9 +80,9 @@ public class Liste<T> implements Iterable<T> {
 		size++;
 	}
 
-	public void ajouterDebut(Liste<T> liste) {
-		for (T elem : liste)
-			ajouterDebut(elem);
+	public void addFirst(Collection<T> col) {
+		for (T elem : col)
+			addFirst(elem);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Liste<T> implements Iterable<T> {
 	 * @throws ArrayIndexOutOfBoundsException
 	 * @throws IllegalArgumentException
 	 */
-	public void ajouter(int index, T elem) {
+	public void add(int index, T elem) {
 		if (index < 0 || index > size)
 			throw new ArrayIndexOutOfBoundsException("index");
 
@@ -101,9 +101,9 @@ public class Liste<T> implements Iterable<T> {
 			throw new IllegalArgumentException("elem");
 
 		if (index == 0)
-			ajouterDebut(elem);
+			addFirst(elem);
 		else if (index == size)
-			ajouterFin(elem);
+			addLast(elem);
 		else {
 			Noeud<T> current = trouveNoeud(index);
 			Noeud<T> nouveau = new Noeud<T>(elem, current, current.previous);
@@ -122,7 +122,7 @@ public class Liste<T> implements Iterable<T> {
 	 * 
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	public T trouve(int index) {
+	public T find(int index) {
 		return trouveNoeud(index).elem;
 	}
 
@@ -155,14 +155,14 @@ public class Liste<T> implements Iterable<T> {
 	 * @throws NoSuchElementException
 	 *             si la file est vide
 	 */
-	public void retirer(int index) {
+	public void remove(int index) {
 		if (index < 0 || index > size)
 			throw new ArrayIndexOutOfBoundsException("index");
 
 		if (index == 0)
-			retirerDebut();
+			removeFirst();
 		else if (index == size)
-			retirerFin();
+			removeLast();
 		else {
 			Noeud<T> supprimer = trouveNoeud(index);
 			supprimer.previous.next = supprimer.next;
@@ -174,7 +174,7 @@ public class Liste<T> implements Iterable<T> {
 	/**
 	 * Retire un element au debut de la liste
 	 */
-	public void retirerDebut() {
+	public void removeFirst() {
 		// la pile est vide
 		if (begin == null)
 			throw new NoSuchElementException();
@@ -192,7 +192,7 @@ public class Liste<T> implements Iterable<T> {
 	/**
 	 * Retire un element a la fin de la liste
 	 */
-	public void retirerFin() {
+	public void removeLast() {
 		if (end == null)
 			throw new NoSuchElementException();
 
@@ -250,7 +250,7 @@ public class Liste<T> implements Iterable<T> {
 	 * 
 	 * @return nombre de formes
 	 */
-	public int getSize() {
+	public int count() {
 		return size;
 	}
 

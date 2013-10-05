@@ -21,6 +21,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 /**
  * Classe abstraite qui définit les attributs et les méthodes partagés entre les
@@ -70,11 +71,12 @@ public abstract class Forme {
 	}
 
 	/**
-	 * Retourne le type de la fome 
+	 * Retourne le type de la fome
+	 * 
 	 * @return type
 	 */
 	public TypeForme getType() {
-		return TypeForme.valueOf(this.getClass().getName());
+		return TypeForme.valueOf(this.getClass().getName().toUpperCase());
 	}
 
 	/**
@@ -167,10 +169,12 @@ public abstract class Forme {
 	 */
 	public Forme(int noSeq, int x, int y, int x2, int y2) {
 		this.noSeq = noSeq;
+
 		this.x = x;
 		this.y = y;
 		this.x2 = x2;
 		this.y2 = y2;
+
 		this.couleur = Color.BLACK;
 	}
 
@@ -194,9 +198,15 @@ public abstract class Forme {
 
 	protected void dessinerBoundingBox(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		Stroke oldStroke = g2.getStroke();
+		Color oldColor = g2.getColor();
+
 		g2.setColor(Color.BLACK);
 		g2.setStroke(dashed);
 		g2.drawRect(x, y, x2 - x, y2 - y);
+
+		g2.setStroke(oldStroke);
+		g2.setColor(oldColor);
 	}
 
 	/**
@@ -209,9 +219,10 @@ public abstract class Forme {
 
 	/**
 	 * Retourne l'aire de la bounding box
+	 * 
 	 * @return
 	 */
-	protected int getAire(){
+	protected int getAire() {
 		return (x2 - x) * (y2 - y);
 	}
 

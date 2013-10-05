@@ -30,26 +30,26 @@ import ca.etsmtl.log.util.IDLogger;
 public class FenetrePrincipale extends JFrame implements PropertyChangeListener{
 	
 	private static final long serialVersionUID = -1210804336046370508L;
+	
+	private final CommBase comm = new CommBase();
 
-
-    private FenetreFormes fenetreFormes;
-
+	private final ListeChaine<Forme> formes = new ListeChaine<Forme>();
+	
     /**
 	 * Constructeur
 	 */
-	public FenetrePrincipale(final CommBase comm){
-
-        MenuFenetre menu = new MenuFenetre(comm);
+	public FenetrePrincipale(){
+		
+        MenuFenetre menu = new MenuFenetre(comm, formes);
 		this.setLayout(new BorderLayout());
 		this.add(menu, BorderLayout.NORTH);
-        fenetreFormes = new FenetreFormes();
+        FenetreFormes fenetreFormes = new FenetreFormes(formes);
 		this.add(fenetreFormes, BorderLayout.CENTER); // Ajoute la fenêtre de forme à la fenètre principale
 		this.pack(); // Ajuste la dimension de la fenêtre principale selon celle de ses composants
 		this.setVisible(true); // Rend la fenêtre principale visible.
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //... à réviser selon le comportement que vous désirez ...
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
         comm.setPropertyChangeListener(this);
-        //this.addWindowListener(new FenetrePrincipaleClosingListener(comm));
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -60,10 +60,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener{
                 }
             }
 		});
-
 	}
-
-
 
 
     @Override
@@ -73,7 +70,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener{
             System.out.println(evt.getNewValue());
             Forme f = CreateurFormes.creerForme((String) evt.getNewValue());
             IDLogger.getInstance().logID(f.getNoSeq());
-            fenetreFormes.ajouterForme(f);
+            formes.addLast(f);
             repaint();
         }
         else if(evt.getPropertyName().equals("ERREUR"))

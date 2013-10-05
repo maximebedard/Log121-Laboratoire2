@@ -22,14 +22,6 @@ public class ApplicationFormes{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new ApplicationFormes();
-	}
-	
-	/**
-	 * Constructeur
-	 */
-	public ApplicationFormes(){
-		CommBase comm = new CommBase();
-		new FenetrePrincipale(comm);
+		new FenetrePrincipale();
 	}
 }

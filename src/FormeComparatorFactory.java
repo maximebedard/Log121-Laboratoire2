@@ -41,6 +41,7 @@ public class FormeComparatorFactory {
 
 	private abstract class FormeComparator implements Comparator<Forme>
 	{
+		
 		private boolean ascending;
 		public FormeComparator(boolean ascending)
 		{

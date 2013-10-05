@@ -11,9 +11,6 @@ Historique des modifications
  *******************************************************/
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -58,13 +55,17 @@ public class MenuFenetre extends JMenuBar {
 
 	private static final int DELAI_QUITTER_MSEC = 200;
 
-	CommBase comm; // Pour activer/désactiver la communication avec le serveur
+	private CommBase comm; // Pour activer/désactiver la communication avec le serveur
 
+	private Collection<Forme> formes;
+	
 	/**
 	 * Constructeur
+	 * @param formes 
 	 */
-	public MenuFenetre(CommBase comm) {
+	public MenuFenetre(CommBase comm, Collection<Forme> formes) {
 		this.comm = comm;
+		this.formes = formes;
 		addMenuFichier();
 		addMenuSort();
 		addMenuAide();
@@ -138,11 +139,19 @@ public class MenuFenetre extends JMenuBar {
 	}
 
 	protected void addMenuSort() {
-		JMenu menu = creerMenuRadio(MENU_SORT_TITRE, new String[] {
-				MENU_SORT_AIRE_DESC, MENU_SORT_DISTANCE_MAXIMALE_ASC,
-				MENU_SORT_DISTANCE_MAXIMALE_DESC, MENU_SORT_NO_SEQUENTIEL_ASC,
-				MENU_SORT_NO_SEQUENTIEL_DESC, MENU_SORT_TYPE_FORME_ASC,
-				MENU_SORT_TYPE_FORME_DESC, MENU_SORT_AIRE_ASC });
+		JMenu menu = creerMenu(MENU_SORT_TITRE, new String[] {});
+		
+		ButtonGroup group = new ButtonGroup();
+		
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_AIRE_ASC, FormeComparatorType.AIRE_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_AIRE_DESC, FormeComparatorType.AIRE_DESC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_DISTANCE_MAXIMALE_ASC, FormeComparatorType.DISTANCE_MAXIMALE_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_DISTANCE_MAXIMALE_DESC, FormeComparatorType.DISTANCE_MAXIMALE_DESC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_NO_SEQUENTIEL_ASC, FormeComparatorType.NO_SEQUENTIEL_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_NO_SEQUENTIEL_DESC, FormeComparatorType.NO_SEQUENTIEL_DESC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_TYPE_FORME_ASC, FormeComparatorType.TYPE_FORME_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_TYPE_FORME_DESC, FormeComparatorType.TYPE_FORME_DESC);
+		
 		add(menu);
 	}
 
@@ -179,18 +188,23 @@ public class MenuFenetre extends JMenuBar {
 			menu.add(new JMenuItem(LangueConfig.getResource(itemKey)));
 		}
 		return menu;
-	}
-
-	private static JMenu creerMenuRadio(String titleKey, String[] itemKeys) {
-		JMenu menu = new JMenu(LangueConfig.getResource(titleKey));
-		ButtonGroup grp = new ButtonGroup();
-		for (String itemKey : itemKeys) {
+	}	
+	
+	private static JRadioButtonMenuItem creerSortRadioButtonMenuItem(JComponent menu, ButtonGroup group, String titleKey, FormeComparatorType comparateur)
+	{
+		JRadioButtonMenuItem btn = new JRadioButtonMenuItem(LangueConfig.getResource(titleKey));
+		group.add(btn);
+		menu.add(btn);
+		
+		btn.addActionListener(new ActionListener() {
 			
-			JRadioButtonMenuItem btn = new JRadioButtonMenuItem(LangueConfig.getResource(itemKey));
-			grp.add(btn);
-			menu.add(btn);
-		}
-		return menu;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		return btn;		
 	}
 
 }

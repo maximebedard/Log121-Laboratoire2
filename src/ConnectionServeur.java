@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 public class ConnectionServeur {
 

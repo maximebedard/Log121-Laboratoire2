@@ -17,13 +17,23 @@ import java.awt.Color;
 public class Rectangle extends Forme {
 
 	public Rectangle(int noSeq, int x, int y, int x2, int y2) {
-		super(noSeq, x, y, x2, y2);
+		super(noSeq, x, y, x2 - x, y2 - y);
 		setCouleur(new Color(1.0f, 0.0f, 0.0f, 0.5f));
 	}
 
 	@Override
 	protected void dessinerForme(Graphics g) {
-		g.fillRect(getX(), getY(), getX2() - getX(), getY2() - getY());
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
+	}
+
+	@Override
+	protected double getAire() {
+		return getWidth() * getHeight();
+	}
+
+	@Override
+	protected double getDistanceMax() {
+		return Math.sqrt(getWidth()*getWidth() + getHeight() * getHeight());
 	}
 
 }

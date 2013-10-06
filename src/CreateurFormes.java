@@ -28,7 +28,7 @@ public final class CreateurFormes
      */
     public static Forme creerForme(String chaineForme) 
     {
-			DecodeurForme df = new DecodeurForme(chaineForme);
+			DecodeurFormes df = new DecodeurFormes(chaineForme);
 
 			Forme f = null;
 			int[] coords = df.getCoordonnes();

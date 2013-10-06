@@ -49,12 +49,12 @@ public abstract class Forme {
 	/**
 	 * Position en X2
 	 */
-	private int x2;
+	private int width;
 
 	/**
 	 * Position en Y2
 	 */
-	private int y2;
+	private int height;
 
 	/**
 	 * Couleur de la forme
@@ -89,15 +89,6 @@ public abstract class Forme {
 	}
 
 	/**
-	 * Retourne la position en X2 de la forme
-	 * 
-	 * @return position en x2
-	 */
-	public int getX2() {
-		return x2;
-	}
-
-	/**
 	 * Assigne la position en X de la forme
 	 * 
 	 * @param x
@@ -117,15 +108,6 @@ public abstract class Forme {
 	}
 
 	/**
-	 * Retourne la position en Y de la forme
-	 * 
-	 * @return position en y
-	 */
-	public int getY2() {
-		return y2;
-	}
-
-	/**
 	 * Assigne la position en Y de la forme
 	 * 
 	 * @param y
@@ -133,6 +115,24 @@ public abstract class Forme {
 	 */
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	/**
+	 * Retourne la largeur
+	 * 
+	 * @return width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Retourne la largeur de la forme
+	 * 
+	 * @return height
+	 */
+	public int getHeight() {
+		return height;
 	}
 
 	/**
@@ -167,13 +167,13 @@ public abstract class Forme {
 	 * @param y
 	 *            Position initiale de la forme en Y sur le canevas
 	 */
-	public Forme(int noSeq, int x, int y, int x2, int y2) {
+	public Forme(int noSeq, int x, int y, int width, int height) {
 		this.noSeq = noSeq;
 
 		this.x = x;
 		this.y = y;
-		this.x2 = x2;
-		this.y2 = y2;
+		this.width = width;
+		this.height = height;
 
 		this.couleur = Color.BLACK;
 	}
@@ -203,7 +203,7 @@ public abstract class Forme {
 
 		g2.setColor(Color.BLACK);
 		g2.setStroke(dashed);
-		g2.drawRect(x, y, x2 - x, y2 - y);
+		g2.drawRect(x, y, width, height);
 
 		g2.setStroke(oldStroke);
 		g2.setColor(oldColor);
@@ -217,13 +217,8 @@ public abstract class Forme {
 	 */
 	protected abstract void dessinerForme(Graphics g);
 
-	/**
-	 * Retourne l'aire de la bounding box
-	 * 
-	 * @return
-	 */
-	protected int getAire() {
-		return (x2 - x) * (y2 - y);
-	}
+	protected abstract double getAire();
+
+	protected abstract double getDistanceMax();
 
 }

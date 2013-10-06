@@ -19,16 +19,6 @@ import java.awt.Graphics;
 public class Ovale extends Forme {
 
 	/**
-	 * Rayon horizontal de l'ovale
-	 */
-	private int rayonH;
-
-	/**
-	 * Rayon vertical de l'ovale
-	 */
-	private int rayonV;
-
-	/**
 	 * Constructeur de la classe Ovale
 	 * 
 	 * @param noSeq
@@ -38,15 +28,24 @@ public class Ovale extends Forme {
 	 * @param rayonV
 	 */
 	public Ovale(int noSeq, int x, int y, int rayonH, int rayonV) {
-		super(noSeq, x, y, x + 2 * rayonH, y + 2 * rayonV);
+		super(noSeq, x, y, 2 * rayonH, 2 * rayonV);
 		setCouleur(new Color(0.0f, 1.0f, 0.0f, 0.5f));
-		this.rayonH = rayonH;
-		this.rayonV = rayonV;
+
 	}
 
 	@Override
 	protected void dessinerForme(Graphics g) {
-		g.fillOval(getX(), getY(), 2 * rayonH, 2 * rayonV);
+		g.fillOval(getX(), getY(), getWidth(), getHeight());
+	}
+
+	@Override
+	protected double getAire() {
+		return Math.PI * getWidth() * getHeight();
+	}
+
+	@Override
+	protected double getDistanceMax() {
+		return (getWidth() > getHeight()) ? getWidth() * 2 : getHeight() * 2;
 	}
 
 }

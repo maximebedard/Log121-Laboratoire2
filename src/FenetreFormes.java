@@ -11,8 +11,11 @@ Historique des modifications
  *******************************************************/
 
 import javax.swing.*;
+
+
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.Comparator;
 
 /**
  * Cette fenêtre gère l'affichage des formes
@@ -26,13 +29,40 @@ public class FenetreFormes extends JComponent {
 	public static final int HEIGHT = 500;
 	public static final Dimension dimension = new Dimension(500, 500);
 
-	private Collection<Forme> formes;
+	private Ensemble<Forme> formes = new ListeChaine<Forme>();
 
+	private Comparator<Forme> comparator;
+	
 	/**
 	 * Constructeur
 	 */
-	public FenetreFormes(Collection<Forme> formes) {
-		this.formes = formes;
+	public FenetreFormes() {
+	}
+
+	public void ajouterForme(Forme f) {
+		formes.ajouterFin(f);
+		Reorganiser();
+	}
+
+	public void effacerTout() {
+		formes.vider();
+		Reorganiser();
+	}
+	
+	public void Reorganiser()
+	{
+		if(comparator != null)
+		{
+			formes = Ensembles.sort(formes, comparator);
+			int i = 0;
+			for(Forme f : formes)
+			{
+				f.setX(i * 40);
+				f.setY(i * 40);
+				i++;
+			}
+		}
+		repaint();
 	}
 
 	/*
@@ -51,6 +81,14 @@ public class FenetreFormes extends JComponent {
 	@Override
 	public Dimension getPreferredSize() {
 		return dimension;
+	}
+
+	public Comparator<Forme> getComparator() {
+		return comparator;
+	}
+
+	public void setComparator(Comparator<Forme> comparator) {
+		this.comparator = comparator;
 	}
 
 }

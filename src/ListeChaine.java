@@ -1,29 +1,29 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ListeChaine<T> implements Collection<T> {
+public class ListeChaine<T> implements Ensemble<T> {
 
 	/**
 	 * Nombre d'éléments dans la file
 	 */
-	private int size;
+	private int taille;
 
 	/**
 	 * Noeud au début de la file
 	 */
-	private Noeud<T> begin;
+	private Noeud<T> debut;
 
 	/**
 	 * Noeud à la fin de la file
 	 */
-	private Noeud<T> end;
+	private Noeud<T> fin;
 
 	/**
 	 * Construit une liste d'éléments vide
 	 */
 	public ListeChaine() {
-		begin = end = null;
-		size = 0;
+		debut = fin = null;
+		taille = 0;
 	}
 
 	/**
@@ -32,28 +32,30 @@ public class ListeChaine<T> implements Collection<T> {
 	 * @param elem
 	 * @throws IllegalArgumentException
 	 */
-	public void addLast(T elem) {
+	@Override
+	public void ajouterFin(T elem) {
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
 
 		// on ajoute le premier noeud
-		if (begin == null) {
-			begin = new Noeud<T>(elem);
-			end = begin;
+		if (debut == null) {
+			debut = new Noeud<T>(elem);
+			fin = debut;
 		}
 		// on ajoute le noeud é la fin
 		else {
-			Noeud<T> a = end;
-			end.next = new Noeud<T>(elem, null, a);
-			end = end.next;
+			Noeud<T> a = fin;
+			fin.next = new Noeud<T>(elem, null, a);
+			fin = fin.next;
 		}
 
-		size++;
+		taille++;
 	}
 
-	public void addLast(Collection<T> col) {
+	@Override
+	public void ajouterFin(Ensemble<T> col) {
 		for (T elem : col)
-			addLast(elem);
+			ajouterFin(elem);
 	}
 
 	/**
@@ -63,26 +65,28 @@ public class ListeChaine<T> implements Collection<T> {
 	 * 
 	 * @throws IllegalArgumentException
 	 */
-	public void addFirst(T elem) {
+	@Override
+	public void ajouterDebut(T elem) {
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
 
 		// on ajoute le premier noeud
-		if (begin == null) {
-			begin = new Noeud<T>(elem);
-			end = begin;
+		if (debut == null) {
+			debut = new Noeud<T>(elem);
+			fin = debut;
 		} else {
-			Noeud<T> temp = begin;
-			begin = new Noeud<T>(elem, temp, null);
-			temp.previous = begin;
+			Noeud<T> temp = debut;
+			debut = new Noeud<T>(elem, temp, null);
+			temp.previous = debut;
 		}
 
-		size++;
+		taille++;
 	}
 
-	public void addFirst(Collection<T> col) {
+	@Override
+	public void ajouterDebut(Ensemble<T> col) {
 		for (T elem : col)
-			addFirst(elem);
+			ajouterDebut(elem);
 	}
 
 	/**
@@ -93,24 +97,25 @@ public class ListeChaine<T> implements Collection<T> {
 	 * @throws ArrayIndexOutOfBoundsException
 	 * @throws IllegalArgumentException
 	 */
-	public void add(int index, T elem) {
-		if (index < 0 || index > size)
+	@Override
+	public void ajouter(int index, T elem) {
+		if (index < 0 || index > taille)
 			throw new ArrayIndexOutOfBoundsException("index");
 
 		if (elem == null)
 			throw new IllegalArgumentException("elem");
 
 		if (index == 0)
-			addFirst(elem);
-		else if (index == size)
-			addLast(elem);
+			ajouterDebut(elem);
+		else if (index == taille)
+			ajouterFin(elem);
 		else {
 			Noeud<T> current = trouveNoeud(index);
 			Noeud<T> nouveau = new Noeud<T>(elem, current, current.previous);
 			current.previous.next = nouveau;
 			current.next.previous = nouveau;
 
-			size++;
+			taille++;
 		}
 	}
 
@@ -122,7 +127,8 @@ public class ListeChaine<T> implements Collection<T> {
 	 * 
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	public T find(int index) {
+	@Override
+	public T trouve(int index) {
 		return trouveNoeud(index).elem;
 	}
 
@@ -136,10 +142,10 @@ public class ListeChaine<T> implements Collection<T> {
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	private Noeud<T> trouveNoeud(int index) {
-		if (index < 0 || index > size)
+		if (index < 0 || index > taille)
 			throw new ArrayIndexOutOfBoundsException("index");
 
-		Noeud<T> found = begin;
+		Noeud<T> found = debut;
 		int i = 0;
 
 		while (found.hasNext() && i++ != index) {
@@ -155,94 +161,74 @@ public class ListeChaine<T> implements Collection<T> {
 	 * @throws NoSuchElementException
 	 *             si la file est vide
 	 */
-	public void remove(int index) {
-		if (index < 0 || index > size)
+	@Override
+	public void retirer(int index) {
+		if (index < 0 || index > taille)
 			throw new ArrayIndexOutOfBoundsException("index");
 
 		if (index == 0)
-			removeFirst();
-		else if (index == size)
-			removeLast();
+			retirerDebut();
+		else if (index == taille)
+			retirerFin();
 		else {
 			Noeud<T> supprimer = trouveNoeud(index);
 			supprimer.previous.next = supprimer.next;
 			supprimer.next.previous = supprimer.previous;
-			size--;
+			taille--;
 		}
 	}
 
 	/**
 	 * Retire un element au debut de la liste
 	 */
-	public void removeFirst() {
+	@Override
+	public void retirerDebut() {
 		// la pile est vide
-		if (begin == null)
+		if (debut == null)
 			throw new NoSuchElementException();
 
 		// on deplace le noeud du debut s'il y a plus d'un element
-		if (begin.hasNext()) {
-			begin = begin.next;
+		if (debut.hasNext()) {
+			debut = debut.next;
 		} else {
-			begin = null;
-			end = null;
+			debut = null;
+			fin = null;
 		}
-		size--;
+		taille--;
 	}
 
 	/**
 	 * Retire un element a la fin de la liste
 	 */
-	public void removeLast() {
-		if (end == null)
+	@Override
+	public void retirerFin() {
+		if (fin == null)
 			throw new NoSuchElementException();
 
-		if (end.hasPrevious()) {
-			end = end.previous;
+		if (fin.hasPrevious()) {
+			fin = fin.previous;
 		} else {
-			end = null;
-			begin = null;
+			fin = null;
+			debut = null;
 		}
-		size--;
+		taille--;
 	}
 
 	/**
 	 * Retoune un iterateur pour parcourir les elements dans la liste
 	 */
-	public Iterator<T> iterator() {
-		return new IteratorImplementation(begin, true);
-	}
-
-	public Iterator<T> reverseIterator() {
-		return new IteratorImplementation(end, false);
-	}
-
 	@Override
-	public String toString() {
-		String output = "";
-		for (T elem : this)
-			output += elem.toString() + ",";
-
-		return String.format("[%s]", output.substring(0, output.length() - 1));
-
+	public Iterator<T> iterator() {
+		return new IteratorImplementation(debut, true);
 	}
 
-	public String toDebugString() {
-		String output = "";
-
-		Noeud<T> current = begin;
-		while (current != null) {
-			output += String.format(
-					"%s <- %s -> %s,",
-					(current.previous == null ? "NULL" : current.previous.elem
-							.toString()),
-					current.elem.toString(),
-					(current.next == null ? "NULL" : current.next.elem
-							.toString()));
-			current = current.next;
-		}
-
-		return String.format("[%s]", output.substring(0, output.length() - 1));
-
+	/**
+	 * Retourne un iterateur pour parcourir les éléments dans la liste en sens
+	 * inverse
+	 */
+	@Override
+	public Iterator<T> reverseIterator() {
+		return new IteratorImplementation(fin, false);
 	}
 
 	/**
@@ -250,8 +236,9 @@ public class ListeChaine<T> implements Collection<T> {
 	 * 
 	 * @return nombre de formes
 	 */
-	public int count() {
-		return size;
+	@Override
+	public int getNbElements() {
+		return taille;
 	}
 
 	private final class IteratorImplementation implements Iterator<T> {
@@ -312,6 +299,24 @@ public class ListeChaine<T> implements Collection<T> {
 		public U elem;
 		public Noeud<U> next;
 		public Noeud<U> previous;
+	}
+
+	/**
+	 * Retire tous les éléments de la liste
+	 */
+	@Override
+	public void vider() {
+		for (@SuppressWarnings("unused")
+		T elem : this)
+			retirerFin();
+	}
+
+	/**
+	 * Retoure vrai si la liste est vide
+	 */
+	@Override
+	public boolean estVide() {
+		return taille == 0;
 	}
 
 }

@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class DecodeurForme 
+public class DecodeurFormes 
 {
 
     /**
@@ -35,7 +35,7 @@ public class DecodeurForme
      * Constructeur du décodeur de formes
      * @param input forme au format de chaîne de caractères
      */
-	public DecodeurForme(String input)
+	public DecodeurFormes(String input)
 	{
 		if(input == null) 
 			throw new IllegalArgumentException("input");

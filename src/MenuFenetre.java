@@ -11,6 +11,7 @@ Historique des modifications
  *******************************************************/
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -55,17 +56,17 @@ public class MenuFenetre extends JMenuBar {
 
 	private static final int DELAI_QUITTER_MSEC = 200;
 
-	private CommBase comm; // Pour activer/désactiver la communication avec le serveur
+	private final CommBase comm;
 
-	private Collection<Forme> formes;
+	private final FenetreFormes fenetreFormes;
 	
 	/**
 	 * Constructeur
-	 * @param formes 
+	 * @param fenetreFormes 
 	 */
-	public MenuFenetre(CommBase comm, Collection<Forme> formes) {
+	public MenuFenetre(CommBase comm, FenetreFormes fenetreFormes) {
 		this.comm = comm;
-		this.formes = formes;
+		this.fenetreFormes = fenetreFormes;
 		addMenuFichier();
 		addMenuSort();
 		addMenuAide();
@@ -84,6 +85,7 @@ public class MenuFenetre extends JMenuBar {
 			if (addr == null)
 				return;
 
+			fenetreFormes.effacerTout();
 			comm.start(addr);
 		} catch (UnknownHostException ex) {
 			displayErrorMessage(DIALOG_CONNEXION_ERR_UNKNOWNHOST);
@@ -97,7 +99,7 @@ public class MenuFenetre extends JMenuBar {
 	}
 
 	private void displayErrorMessage(String msgKey) {
-		JOptionPaneExtensions.showErrorMessage(this,
+		JOptionPane.showMessageDialog(this,
 				LangueConfig.getResource(msgKey));
 		startConnection();
 	}
@@ -190,17 +192,19 @@ public class MenuFenetre extends JMenuBar {
 		return menu;
 	}	
 	
-	private static JRadioButtonMenuItem creerSortRadioButtonMenuItem(JComponent menu, ButtonGroup group, String titleKey, FormeComparatorType comparateur)
+	private JRadioButtonMenuItem creerSortRadioButtonMenuItem(JComponent menu, ButtonGroup group, String titleKey, final FormeComparatorType typeComparator)
 	{
 		JRadioButtonMenuItem btn = new JRadioButtonMenuItem(LangueConfig.getResource(titleKey));
 		group.add(btn);
 		menu.add(btn);
-		
+				
+		final FormeComparatorFactory factory = new FormeComparatorFactory();
 		btn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				fenetreFormes.setComparator(factory.getComparator(typeComparator));
+				fenetreFormes.Reorganiser();
 			}
 		});
 		

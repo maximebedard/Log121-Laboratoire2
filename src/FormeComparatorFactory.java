@@ -1,102 +1,97 @@
 import java.util.Comparator;
 
-
 public class FormeComparatorFactory {
-	
-	public Comparator<Forme> getComprator(FormeComparatorType type)
-	{
+
+	public Comparator<Forme> getComparator(FormeComparatorType type) {
 		Comparator<Forme> comparator = null;
 
-		switch(type)
-		{
+		switch (type) {
 		case AIRE_ASC:
-			comparator = new AireComparator(true);
+			comparator = new AireComparator();
 			break;
 		case AIRE_DESC:
-			comparator = new AireComparator(false);
+			comparator = Ensembles.reverseOrder(new AireComparator());
 			break;
 		case DISTANCE_MAXIMALE_ASC:
+			comparator = new DistanceMaxComparator();
 			break;
 		case DISTANCE_MAXIMALE_DESC:
+			comparator = Ensembles.reverseOrder(new DistanceMaxComparator());
 			break;
 		case NO_SEQUENTIEL_ASC:
-			comparator = new NoSequentielComparator(true);
+			comparator = new NoSequentielComparator();
 			break;
 		case NO_SEQUENTIEL_DESC:
-			comparator = new NoSequentielComparator(false);
+			comparator = Ensembles.reverseOrder(new NoSequentielComparator());
 			break;
 		case TYPE_FORME_ASC:
-			comparator = new TypeComparator(true);
+			comparator = new TypeComparator();
 			break;
 		case TYPE_FORME_DESC:
-			comparator = new TypeComparator(false);
+			comparator = Ensembles.reverseOrder(new TypeComparator());
+			break;
+		case HAUTEUR_ASC:
+			comparator = new HauteurComparator();
+			break;
+		case HAUTEUR_DESC:
+			comparator = Ensembles.reverseOrder(new HauteurComparator());
+			break;
+		case LARGEUR_ASC:
+			comparator = new LargeurComparator();
+			break;
+		case LARGEUR_DESC:
+			comparator = Ensembles.reverseOrder(new LargeurComparator());
 			break;
 		default:
-			comparator = new NoSequentielComparator(true);
 			break;
 		}
-		
-		return comparator;	
+
+		return comparator;
 	}
 
-	private abstract class FormeComparator implements Comparator<Forme>
-	{
-		
-		private boolean ascending;
-		public FormeComparator(boolean ascending)
-		{
-			this.ascending = ascending;
-		}
-		
-		public boolean isAscending(){
-			return ascending;
-		}
-	}
-	
-	
-	private class NoSequentielComparator extends FormeComparator {
-	
-		public NoSequentielComparator(boolean ascending)
-		{
-			super(ascending);
-		}
-		
-		@Override
-		public int compare(Forme lhs, Forme rhs) {		
-			int result = Integer.compare(lhs.getNoSeq(), rhs.getNoSeq());
-			return isAscending() ? result : result * -1;
-		}
-	}
-	
-	private class AireComparator extends FormeComparator
-	{
-
-		public AireComparator(boolean ascending) {
-			super(ascending);
-		}
-
+	private class NoSequentielComparator implements Comparator<Forme> {
 		@Override
 		public int compare(Forme lhs, Forme rhs) {
-			int result = Integer.compare(lhs.getAire(), rhs.getAire());
-			
-			return isAscending() ? result : result * -1;
+			return Integer.compare(lhs.getNoSeq(), rhs.getNoSeq());
 		}
-		
 	}
-	
-	private class TypeComparator extends FormeComparator
-	{
-		public TypeComparator(boolean ascending) {
-			super(ascending);
-		}
 
+	private class AireComparator implements Comparator<Forme> {
 		@Override
 		public int compare(Forme lhs, Forme rhs) {
-			int result = Integer.compare(lhs.getType().ordinal(), rhs.getType().ordinal());
-			return isAscending() ? result : result * -1;
-		}	
+			return Double.compare(lhs.getAire(), rhs.getAire());
+		}
+
 	}
-	
-	
-	
+
+	private class TypeComparator implements Comparator<Forme> {
+		@Override
+		public int compare(Forme lhs, Forme rhs) {
+			return Integer.compare(lhs.getType().ordinal(), rhs.getType()
+					.ordinal());
+		}
+	}
+
+	private class DistanceMaxComparator implements Comparator<Forme> {
+		@Override
+		public int compare(Forme lhs, Forme rhs) {
+			return Double.compare(lhs.getDistanceMax(), rhs.getDistanceMax());
+		}
+	}
+
+	private class LargeurComparator implements Comparator<Forme> {
+
+		@Override
+		public int compare(Forme o1, Forme o2) {
+			return Integer.compare(o1.getWidth(), o2.getWidth());
+		}
+	}
+
+	private class HauteurComparator implements Comparator<Forme> {
+		@Override
+		public int compare(Forme o1, Forme o2) {
+			return Integer.compare(o1.getHeight(), o1.getHeight());
+		}
+	}
+
 }

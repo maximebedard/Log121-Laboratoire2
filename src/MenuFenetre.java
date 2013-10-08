@@ -44,6 +44,10 @@ public class MenuFenetre extends JMenuBar {
 			MENU_SORT_NO_SEQUENTIEL_DESC = "app.frame.menus.sort.noseq.desc",
 			MENU_SORT_TYPE_FORME_ASC = "app.frame.menus.sort.typeforme.asc",
 			MENU_SORT_TYPE_FORME_DESC = "app.frame.menus.sort.typeforme.desc",
+			MENU_SORT_HAUTEUR_ASC = "app.frame.menus.sort.hauteur.asc",
+			MENU_SORT_HAUTEUR_DESC = "app.frame.menus.sort.hauteur.desc",
+			MENU_SORT_LARGEUR_ASC = "app.frame.menus.sort.largeur.asc",
+			MENU_SORT_LARGEUR_DESC = "app.frame.sort.largeur.desc",
 			MENU_AIDE_TITRE = "app.frame.menus.help.title",
 			MENU_AIDE_PROPOS = "app.frame.menus.help.about",
 			DIALOG_CONNEXION_MSG = "app.frame.menus.connect.msg",
@@ -153,6 +157,10 @@ public class MenuFenetre extends JMenuBar {
 		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_NO_SEQUENTIEL_DESC, FormeComparatorType.NO_SEQUENTIEL_DESC);
 		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_TYPE_FORME_ASC, FormeComparatorType.TYPE_FORME_ASC);
 		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_TYPE_FORME_DESC, FormeComparatorType.TYPE_FORME_DESC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_HAUTEUR_ASC, FormeComparatorType.HAUTEUR_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_HAUTEUR_DESC, FormeComparatorType.HAUTEUR_DESC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_LARGEUR_ASC, FormeComparatorType.LARGEUR_ASC);
+		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_LARGEUR_DESC, FormeComparatorType.LARGEUR_DESC);
 		
 		add(menu);
 	}

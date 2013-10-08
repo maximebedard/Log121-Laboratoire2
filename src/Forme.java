@@ -29,7 +29,7 @@ import java.awt.Stroke;
  * 
  * @author Maxime Bédard
  */
-public abstract class Forme {
+public abstract class Forme implements Cloneable {
 
 	/**
 	 * Numéro séquentiel unique obtenu lors de la création de la forme
@@ -210,6 +210,17 @@ public abstract class Forme {
 	}
 
 	/**
+	 * Retourne une copie de l'objet
+	 */
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * Dessine la forme sur le canevas
 	 * 
 	 * @param g
@@ -217,8 +228,16 @@ public abstract class Forme {
 	 */
 	protected abstract void dessinerForme(Graphics g);
 
+	/**
+	 * Retourne l'aire de la forme
+	 * @return aire
+	 */
 	protected abstract double getAire();
 
+	/**
+	 * Retourne la distance maximale de la forme
+	 * @return distance max
+	 */
 	protected abstract double getDistanceMax();
 
 }

@@ -42,6 +42,9 @@ public class FormeComparatorFactory {
 		case LARGEUR_DESC:
 			comparator = Ensembles.reverseOrder(new LargeurComparator());
 			break;
+		case AUCUN:
+			comparator = null;
+			break;
 		default:
 			break;
 		}

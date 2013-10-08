@@ -12,7 +12,6 @@ Historique des modifications
 
 import javax.swing.*;
 
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Comparator;
@@ -30,6 +29,8 @@ public class FenetreFormes extends JComponent {
 	public static final Dimension dimension = new Dimension(500, 500);
 
 	private Ensemble<Forme> formes = new ListeChaine<Forme>();
+	
+	private Ensemble<Forme> formesOriginales = new ListeChaine<Forme>();
 
 	private Comparator<Forme> comparator;
 	
@@ -38,20 +39,41 @@ public class FenetreFormes extends JComponent {
 	 */
 	public FenetreFormes() {
 	}
-
+	
+	/**
+	 * Ajoute la forme et créé une copie originale de celle ci dans une autre liste
+	 * @param f
+	 */
 	public void ajouterForme(Forme f) {
-		formes.ajouterFin(f);
+		formes.ajouterFin(f);	
+		formesOriginales.ajouterFin((Forme)f.clone());
 		Reorganiser();
 	}
 
+	/**
+	 * Efface toutes les formes de la liste de forme qui est dessiné à l'écran
+	 */
 	public void effacerTout() {
 		formes.vider();
 		Reorganiser();
 	}
 	
+	/**
+	 * Copie toutes les formes original dans la liste de forme dessiné à l'écran
+	 */
+	private void copierFormes()
+	{
+		formes = new ListeChaine<Forme>();
+		for(Forme f : formesOriginales)
+			formes.ajouterFin((Forme)f.clone());
+	}
+	
+	/**
+	 * Réorganise les formes selon l'algorithme de tri selectionné
+	 */
 	public void Reorganiser()
 	{
-		if(comparator != null)
+		if(comparator != null) 
 		{
 			formes = Ensembles.sort(formes, comparator);
 			int i = 0;
@@ -62,6 +84,7 @@ public class FenetreFormes extends JComponent {
 				i++;
 			}
 		}
+	
 		repaint();
 	}
 
@@ -83,12 +106,21 @@ public class FenetreFormes extends JComponent {
 		return dimension;
 	}
 
+	/**
+	 * Retourne le comparateur utilisé pour effectuer le tri
+	 * @return comparateur de forme
+	 */
 	public Comparator<Forme> getComparator() {
 		return comparator;
 	}
 
+	/**
+	 * Assigne le comparateur de forme et effectue et restaure une copie si le comparateur assigné est null
+	 * @param comparator
+	 */
 	public void setComparator(Comparator<Forme> comparator) {
 		this.comparator = comparator;
+		if(comparator == null) copierFormes();
 	}
 
 }

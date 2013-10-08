@@ -1,5 +1,6 @@
 
 public enum FormeComparatorType {
+	AUCUN,
 	NO_SEQUENTIEL_ASC,
 	NO_SEQUENTIEL_DESC,
 	AIRE_ASC,

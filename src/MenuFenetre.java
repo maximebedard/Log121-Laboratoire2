@@ -36,6 +36,7 @@ public class MenuFenetre extends JMenuBar {
 			MENU_FICHIER_OBTENIR_FORMES = "app.frame.menus.file.obtenir",
 			MENU_FICHIER_QUITTER = "app.frame.menus.file.exit",
 			MENU_SORT_TITRE = "app.frame.menus.sort.title",
+			MENU_SORT_AUCUN = "app.frame.menus.sort.aucun",
 			MENU_SORT_AIRE_ASC = "app.frame.menus.sort.aire.asc",
 			MENU_SORT_AIRE_DESC = "app.frame.menus.sort.aire.desc",
 			MENU_SORT_DISTANCE_MAXIMALE_ASC = "app.frame.menus.sort.distancemax.asc",
@@ -148,6 +149,9 @@ public class MenuFenetre extends JMenuBar {
 		JMenu menu = creerMenu(MENU_SORT_TITRE, new String[] {});
 		
 		ButtonGroup group = new ButtonGroup();
+		
+		JRadioButtonMenuItem noneBtn = creerSortRadioButtonMenuItem(menu, group, MENU_SORT_AUCUN, FormeComparatorType.AUCUN);
+		noneBtn.setSelected(true);
 		
 		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_AIRE_ASC, FormeComparatorType.AIRE_ASC);
 		creerSortRadioButtonMenuItem(menu, group, MENU_SORT_AIRE_DESC, FormeComparatorType.AIRE_DESC);

@@ -18,13 +18,13 @@ import java.awt.Graphics;
 
 public class Ligne extends Forme {
 
-	private int x1;
+	private int dx1;
 
-	private int x2;
+	private int dx2;
 
-	private int y1;
+	private int dy1;
 
-	private int y2;
+	private int dy2;
 
 	/**
 	 * Constructeur de la classe ligne
@@ -44,17 +44,13 @@ public class Ligne extends Forme {
 		super(noSeq, Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2),
 				Math.abs(y1 - y2));
 
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
 
 		setCouleur(Color.RED);
 	}
 
 	@Override
 	protected void dessinerForme(Graphics g) {
-		g.drawLine(x1, y1, x2, y2);
+//		g.drawLine(;
 
 	}
 

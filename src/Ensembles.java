@@ -35,7 +35,8 @@ public final class Ensembles {
 	/**
 	 * Implémentation du QuickSort Source :
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#Java
-	 * 
+	 * Pire cas : O(n^2)
+	 * Meilleur cas : O(nlogn)
 	 * @param col
 	 * @param comp
 	 * @return Nouvelle collection trié

@@ -153,6 +153,12 @@ public abstract class Forme implements Cloneable {
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return String.valueOf(noSeq);
+	}
 
 	/**
 	 * Construit une nouvelle forme a partir d'un numéro séquentiel ainsi ainsi

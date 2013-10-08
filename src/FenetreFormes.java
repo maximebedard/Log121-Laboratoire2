@@ -55,6 +55,7 @@ public class FenetreFormes extends JComponent {
 	 */
 	public void effacerTout() {
 		formes.vider();
+		formesOriginales.vider();
 		Reorganiser();
 	}
 	
@@ -63,7 +64,7 @@ public class FenetreFormes extends JComponent {
 	 */
 	private void copierFormes()
 	{
-		formes = new ListeChaine<Forme>();
+		formes.vider();
 		for(Forme f : formesOriginales)
 			formes.ajouterFin((Forme)f.clone());
 	}

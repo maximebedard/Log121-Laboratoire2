@@ -39,12 +39,12 @@ public class Ovale extends Forme {
 	}
 
 	@Override
-	protected double getAire() {
+	public double getAire() {
 		return Math.PI * getWidth() * getHeight();
 	}
 
 	@Override
-	protected double getDistanceMax() {
+	public double getDistanceMax() {
 		return (getWidth() > getHeight()) ? getWidth() * 2 : getHeight() * 2;
 	}
 

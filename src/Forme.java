@@ -2,17 +2,17 @@
 Cours:  LOG121
 Projet: laboratoire #1
 Nom du fichier: Forme.java
-Date créé: 2013-09-12
+Date cr����: 2013-09-12
  *******************************************************
 Historique des modifications
  *******************************************************
  *@author Patrice Boucher
 2013-09-12 Version initiale
 
- *@author Nicolas Jiménez-Dumont
+ *@author Nicolas Jim��nez-Dumont
 2013-09-17 Ajout de la variable couleur
 
- *@author Maxime Bédard
+ *@author Maxime B��dard
 2013-09-18 Modification de l'application de la couleur
            Ajout de la JavaDoc
  *******************************************************/
@@ -24,15 +24,15 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 /**
- * Classe abstraite qui définit les attributs et les méthodes partagés entre les
- * différentes formes
+ * Classe abstraite qui d��finit les attributs et les m��thodes partag��s entre les
+ * diff��rentes formes
  * 
- * @author Maxime Bédard
+ * @author Maxime B��dard
  */
 public abstract class Forme implements Cloneable {
 
 	/**
-	 * Numéro séquentiel unique obtenu lors de la création de la forme
+	 * Num��ro s��quentiel unique obtenu lors de la cr��ation de la forme
 	 */
 	private int noSeq;
 
@@ -62,9 +62,9 @@ public abstract class Forme implements Cloneable {
 	private Color couleur;
 
 	/**
-	 * Retourne le numéro séquentiel obtenu lors de la création de la forme.
+	 * Retourne le num��ro s��quentiel obtenu lors de la cr��ation de la forme.
 	 * 
-	 * @return le numéro séquentiel unique
+	 * @return le num��ro s��quentiel unique
 	 */
 	public int getNoSeq() {
 		return noSeq;
@@ -145,7 +145,7 @@ public abstract class Forme implements Cloneable {
 	}
 
 	/**
-	 * Assigne la couleur utilisé lorsque la forme est dessiné
+	 * Assigne la couleur utilis�� lorsque la forme est dessin��
 	 * 
 	 * @param couleur
 	 *            Couleur de la forme
@@ -161,12 +161,12 @@ public abstract class Forme implements Cloneable {
 	}
 
 	/**
-	 * Construit une nouvelle forme a partir d'un numéro séquentiel ainsi ainsi
-	 * que ses coordonnées (x,y). Lors de la création d'une forme, la couleur
-	 * Color.BLACK est initialisé par défaut.
+	 * Construit une nouvelle forme a partir d'un num��ro s��quentiel ainsi ainsi
+	 * que ses coordonn��es (x,y). Lors de la cr��ation d'une forme, la couleur
+	 * Color.BLACK est initialis�� par d��faut.
 	 * 
 	 * @param noSeq
-	 *            Numéro séquentielle unique obtenu lors des échanges avec le
+	 *            Num��ro s��quentielle unique obtenu lors des ��changes avec le
 	 *            serveur.
 	 * @param x
 	 *            Position initiale de la forme en X sur le canevas
@@ -190,7 +190,7 @@ public abstract class Forme implements Cloneable {
 
 	/**
 	 * Dessine la forme sur le canevas en appelant la fonction dessinerForme des
-	 * classes qui héritent de Forme. Cette fonction applique la couleur avant
+	 * classes qui h��ritent de Forme. Cette fonction applique la couleur avant
 	 * de dessiner la forme.
 	 * 
 	 * @param g
@@ -218,9 +218,9 @@ public abstract class Forme implements Cloneable {
 	/**
 	 * Retourne une copie de l'objet
 	 */
-	public Object clone() {
+	public Forme clone() {
 		try {
-			return super.clone();
+			return (Forme)super.clone();
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
@@ -238,12 +238,12 @@ public abstract class Forme implements Cloneable {
 	 * Retourne l'aire de la forme
 	 * @return aire
 	 */
-	protected abstract double getAire();
+	public abstract double getAire();
 
 	/**
 	 * Retourne la distance maximale de la forme
 	 * @return distance max
 	 */
-	protected abstract double getDistanceMax();
+	public abstract double getDistanceMax();
 
 }

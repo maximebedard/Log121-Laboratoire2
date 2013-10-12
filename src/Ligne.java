@@ -50,12 +50,12 @@ public class Ligne extends Forme {
 	}
 
 	@Override
-	protected double getAire() {
+	public double getAire() {
 		return 0;
 	}
 
 	@Override
-	protected double getDistanceMax() {
+	public double getDistanceMax() {
 		return Math.sqrt(getWidth() * getWidth() + getHeight() * getHeight());
 	}
 

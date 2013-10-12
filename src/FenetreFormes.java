@@ -46,8 +46,8 @@ public class FenetreFormes extends JComponent {
 	 */
 	public void ajouterForme(Forme f) {
 		formes.ajouterFin(f);	
-		formesOriginales.ajouterFin((Forme)f.clone());
-		Reorganiser();
+		formesOriginales.ajouterFin(f.clone());
+		reorganiser();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class FenetreFormes extends JComponent {
 	public void effacerTout() {
 		formes.vider();
 		formesOriginales.vider();
-		Reorganiser();
+		reorganiser();
 	}
 	
 	/**
@@ -66,13 +66,13 @@ public class FenetreFormes extends JComponent {
 	{
 		formes.vider();
 		for(Forme f : formesOriginales)
-			formes.ajouterFin((Forme)f.clone());
+			formes.ajouterFin(f.clone());
 	}
 	
 	/**
 	 * Réorganise les formes selon l'algorithme de tri selectionné
 	 */
-	public void Reorganiser()
+	public void reorganiser()
 	{
 		if(comparator != null) 
 		{

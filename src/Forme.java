@@ -218,6 +218,7 @@ public abstract class Forme implements Cloneable {
 	/**
 	 * Retourne une copie de l'objet
 	 */
+	@Override
 	public Forme clone() {
 		try {
 			return (Forme)super.clone();

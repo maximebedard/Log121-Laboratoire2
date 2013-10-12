@@ -38,7 +38,7 @@ public class EnsemblesTest {
 	{
 		ListeChaine<Forme> nouvelle = new ListeChaine<Forme>();
 		for(Forme f : ens)
-			nouvelle.ajouterFin((Forme)f.clone());
+			nouvelle.ajouterFin(f.clone());
 		
 		return nouvelle;
 	}

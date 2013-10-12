@@ -216,7 +216,7 @@ public class MenuFenetre extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				fenetreFormes.setComparator(factory.getComparator(typeComparator));
-				fenetreFormes.Reorganiser();
+				fenetreFormes.reorganiser();
 			}
 		});
 		

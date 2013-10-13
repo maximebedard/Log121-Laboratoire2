@@ -34,6 +34,9 @@ public class CommBase {
 
 					firePropertyChangeInternal("FORME", strForme);
 				}
+			
+				connexion.disconnect();
+			
 			} catch (IOException ex) {
 				firePropertyChangeInternal("ERREUR", ex);
 			} catch (Exception ex) {

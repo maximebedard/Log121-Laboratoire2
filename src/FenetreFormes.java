@@ -122,6 +122,7 @@ public class FenetreFormes extends JComponent {
 	public void setComparator(Comparator<Forme> comparator) {
 		this.comparator = comparator;
 		if(comparator == null) copierFormes();
+		reorganiser();
 	}
 
 }

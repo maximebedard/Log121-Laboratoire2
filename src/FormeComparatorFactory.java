@@ -93,7 +93,7 @@ public class FormeComparatorFactory {
 	private class HauteurComparator implements Comparator<Forme> {
 		@Override
 		public int compare(Forme o1, Forme o2) {
-			return Integer.compare(o1.getHeight(), o1.getHeight());
+			return Integer.compare(o1.getHeight(), o2.getHeight());
 		}
 	}
 
